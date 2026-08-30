@@ -6,9 +6,34 @@ import FileQueue from "@/components/upload/FileQueue";
 import { QueuedImage } from "@/types/image";
 import { validateImageFile, getFormatLabel } from "@/lib/image/validation";
 import { generateId } from "@/lib/utils/id";
+import { analyzeImage } from "@/lib/metadata/analyze";
 
 export default function CheckerPage() {
   const [images, setImages] = useState<QueuedImage[]>([]);
+
+  function updateImage(id: string, patch: Partial<QueuedImage>) {
+    setImages((prev) =>
+      prev.map((img) => (img.id === id ? { ...img, ...patch } : img))
+    );
+  }
+
+  function runAnalysis(id: string, file: File) {
+    updateImage(id, { status: "scanning" });
+    analyzeImage(id, file)
+      .then((result) => {
+        updateImage(id, {
+          status: "ready",
+          analysisResult: result,
+          metadataCount: result.totalCount,
+        });
+      })
+      .catch((error: Error) => {
+        updateImage(id, {
+          status: "failed",
+          errorMessage: error.message,
+        });
+      });
+  }
 
   function handleFilesSelected(files: File[]) {
     const newImages: QueuedImage[] = files.map((file) => {
@@ -26,6 +51,10 @@ export default function CheckerPage() {
     });
 
     setImages((prev) => [...prev, ...newImages]);
+
+    newImages
+      .filter((img) => img.status === "waiting")
+      .forEach((img) => runAnalysis(img.id, img.file));
   }
 
   function handleRemove(id: string) {
