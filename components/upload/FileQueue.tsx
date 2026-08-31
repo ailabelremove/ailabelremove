@@ -1,18 +1,25 @@
 "use client";
 
 import { QueuedImage } from "@/types/image";
+import type { CleaningMode, CleaningSelection } from "@/types/cleaning";
 import ImageCard from "./ImageCard";
 
 interface FileQueueProps {
   images: QueuedImage[];
   onRemove: (id: string) => void;
   onClearAll: () => void;
+  onCleaningModeChange: (id: string, mode: CleaningMode) => void;
+  onCleaningSelectionChange: (id: string, selection: CleaningSelection) => void;
+  onClean: (id: string) => void;
 }
 
 export default function FileQueue({
   images,
   onRemove,
   onClearAll,
+  onCleaningModeChange,
+  onCleaningSelectionChange,
+  onClean,
 }: FileQueueProps) {
   if (images.length === 0) return null;
 
@@ -32,7 +39,14 @@ export default function FileQueue({
       </div>
       <div className="flex flex-col gap-2">
         {images.map((image) => (
-          <ImageCard key={image.id} image={image} onRemove={onRemove} />
+          <ImageCard
+            key={image.id}
+            image={image}
+            onRemove={onRemove}
+            onCleaningModeChange={onCleaningModeChange}
+            onCleaningSelectionChange={onCleaningSelectionChange}
+            onClean={onClean}
+          />
         ))}
       </div>
     </div>
