@@ -1,5 +1,6 @@
 import type { AnalysisResult } from "./metadata";
 import type { RiskScoreResult } from "./privacy";
+import type { CleaningMode, CleaningSelection } from "./cleaning";
 
 export type ImageStatus =
   | "waiting"
@@ -23,4 +24,10 @@ export interface QueuedImage {
   metadataCount?: number;
   analysisResult?: AnalysisResult;
   riskScore?: RiskScoreResult;
+  cleaningMode: CleaningMode;
+  cleaningSelection: CleaningSelection;
+  cleanedBlob?: Blob;
+  cleanedUrl?: string;
+  cleanedSizeBytes?: number;
+  cleanErrorMessage?: string;
 }
