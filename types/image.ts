@@ -1,6 +1,7 @@
 import type { AnalysisResult } from "./metadata";
 import type { RiskScoreResult } from "./privacy";
 import type { CleaningMode, CleaningSelection } from "./cleaning";
+import type { VerificationResult } from "./verification";
 
 export type ImageStatus =
   | "waiting"
@@ -30,4 +31,7 @@ export interface QueuedImage {
   cleanedUrl?: string;
   cleanedSizeBytes?: number;
   cleanErrorMessage?: string;
+  cleanedAnalysisResult?: AnalysisResult;
+  cleanedRiskScore?: RiskScoreResult;
+  verification?: VerificationResult;
 }
