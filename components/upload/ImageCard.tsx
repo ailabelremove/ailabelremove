@@ -7,6 +7,8 @@ import MetadataPanel from "@/components/metadata/MetadataPanel";
 import RiskScore from "@/components/results/RiskScore";
 import CleaningModeSelector from "@/components/cleaner/CleaningModeSelector";
 import CustomCleaningOptions from "@/components/cleaner/CustomCleaningOptions";
+import BeforeAfterComparison from "@/components/results/BeforeAfterComparison";
+import VerificationResultPanel from "@/components/results/VerificationResult";
 import type { CleaningMode, CleaningSelection } from "@/types/cleaning";
 
 interface ImageCardProps {
@@ -44,6 +46,7 @@ export default function ImageCard({
   const [showDetails, setShowDetails] = useState(false);
   const hasResult = !!image.analysisResult && image.status !== "failed";
   const isCleaning = image.status === "cleaning";
+  const isVerifying = image.status === "verifying";
   const isCleaned = !!image.cleanedUrl;
 
   return (
@@ -151,10 +154,28 @@ export default function ImageCard({
               ? formatFileSize(image.cleanedSizeBytes)
               : "?"}
           </p>
+
+          {isVerifying && (
+            <p className="mt-2 text-xs text-gray-500">Verifying…</p>
+          )}
+
+          {image.verification && (
+            <>
+              <div className="mt-2">
+                <BeforeAfterComparison
+                  verification={image.verification}
+                  riskBefore={image.riskScore}
+                  riskAfter={image.cleanedRiskScore}
+                />
+              </div>
+              <VerificationResultPanel verification={image.verification} />
+            </>
+          )}
+
           <a
             href={image.cleanedUrl}
             download={buildCleanedFilename(image.name)}
-            className="mt-2 inline-block w-full rounded-md bg-green-700 py-2 text-center text-xs font-medium text-white"
+            className="mt-3 inline-block w-full rounded-md bg-green-700 py-2 text-center text-xs font-medium text-white"
           >
             Download Cleaned Image
           </a>
@@ -162,4 +183,4 @@ export default function ImageCard({
       )}
     </div>
   );
-}
+  }
