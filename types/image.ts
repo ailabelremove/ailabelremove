@@ -1,4 +1,5 @@
 import type { AnalysisResult } from "./metadata";
+import type { RiskScoreResult } from "./privacy";
 
 export type ImageStatus =
   | "waiting"
@@ -20,6 +21,6 @@ export interface QueuedImage {
   status: ImageStatus;
   errorMessage?: string;
   metadataCount?: number;
-  privacyScore?: number;
   analysisResult?: AnalysisResult;
+  riskScore?: RiskScoreResult;
 }
