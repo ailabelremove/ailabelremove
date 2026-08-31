@@ -4,6 +4,7 @@ import { useState } from "react";
 import { QueuedImage } from "@/types/image";
 import { formatFileSize } from "@/lib/image/validation";
 import MetadataPanel from "@/components/metadata/MetadataPanel";
+import RiskScore from "@/components/results/RiskScore";
 
 interface ImageCardProps {
   image: QueuedImage;
@@ -66,6 +67,12 @@ export default function ImageCard({ image, onRemove }: ImageCardProps) {
         </button>
       </div>
 
+      {hasResult && image.riskScore && (
+        <div className="mt-3">
+          <RiskScore result={image.riskScore} />
+        </div>
+      )}
+
       {hasResult && (
         <div className="mt-2">
           <button
@@ -80,4 +87,4 @@ export default function ImageCard({ image, onRemove }: ImageCardProps) {
       )}
     </div>
   );
-            }
+}
