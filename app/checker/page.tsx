@@ -8,6 +8,13 @@ import { validateImageFile, getFormatLabel } from "@/lib/image/validation";
 import { generateId } from "@/lib/utils/id";
 import { analyzeImage } from "@/lib/metadata/analyze";
 import { calculateRiskScore } from "@/lib/privacy/riskScore";
+import { cleanImage } from "@/lib/image/cleanRunner";
+import {
+  CleaningMode,
+  CleaningSelection,
+  MAXIMUM_PRIVACY_SELECTION,
+  DEFAULT_CUSTOM_SELECTION,
+} from "@/types/cleaning";
 
 export default function CheckerPage() {
   const [images, setImages] = useState<QueuedImage[]>([]);
@@ -50,6 +57,8 @@ export default function CheckerPage() {
         format: getFormatLabel(file),
         status: validation.valid ? "waiting" : "failed",
         errorMessage: validation.errorMessage,
+        cleaningMode: "maximum" as CleaningMode,
+        cleaningSelection: DEFAULT_CUSTOM_SELECTION,
       };
     });
 
@@ -63,14 +72,60 @@ export default function CheckerPage() {
   function handleRemove(id: string) {
     setImages((prev) => {
       const target = prev.find((img) => img.id === id);
-      if (target) URL.revokeObjectURL(target.previewUrl);
+      if (target) {
+        URL.revokeObjectURL(target.previewUrl);
+        if (target.cleanedUrl) URL.revokeObjectURL(target.cleanedUrl);
+      }
       return prev.filter((img) => img.id !== id);
     });
   }
 
   function handleClearAll() {
-    images.forEach((img) => URL.revokeObjectURL(img.previewUrl));
+    images.forEach((img) => {
+      URL.revokeObjectURL(img.previewUrl);
+      if (img.cleanedUrl) URL.revokeObjectURL(img.cleanedUrl);
+    });
     setImages([]);
+  }
+
+  function handleCleaningModeChange(id: string, mode: CleaningMode) {
+    updateImage(id, { cleaningMode: mode });
+  }
+
+  function handleCleaningSelectionChange(
+    id: string,
+    selection: CleaningSelection
+  ) {
+    updateImage(id, { cleaningSelection: selection });
+  }
+
+  function handleClean(id: string) {
+    const target = images.find((img) => img.id === id);
+    if (!target) return;
+
+    const selection =
+      target.cleaningMode === "maximum"
+        ? MAXIMUM_PRIVACY_SELECTION
+        : target.cleaningSelection;
+
+    updateImage(id, { status: "cleaning", cleanErrorMessage: undefined });
+
+    cleanImage(id, target.file, selection)
+      .then((blob) => {
+        const cleanedUrl = URL.createObjectURL(blob);
+        updateImage(id, {
+          status: "ready",
+          cleanedBlob: blob,
+          cleanedUrl,
+          cleanedSizeBytes: blob.size,
+        });
+      })
+      .catch((error: Error) => {
+        updateImage(id, {
+          status: "ready",
+          cleanErrorMessage: error.message,
+        });
+      });
   }
 
   return (
@@ -91,7 +146,10 @@ export default function CheckerPage() {
         images={images}
         onRemove={handleRemove}
         onClearAll={handleClearAll}
+        onCleaningModeChange={handleCleaningModeChange}
+        onCleaningSelectionChange={handleCleaningSelectionChange}
+        onClean={handleClean}
       />
     </main>
   );
-}
+                     }
