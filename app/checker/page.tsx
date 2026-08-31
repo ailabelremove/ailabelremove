@@ -7,6 +7,7 @@ import { QueuedImage } from "@/types/image";
 import { validateImageFile, getFormatLabel } from "@/lib/image/validation";
 import { generateId } from "@/lib/utils/id";
 import { analyzeImage } from "@/lib/metadata/analyze";
+import { calculateRiskScore } from "@/lib/privacy/riskScore";
 
 export default function CheckerPage() {
   const [images, setImages] = useState<QueuedImage[]>([]);
@@ -21,10 +22,12 @@ export default function CheckerPage() {
     updateImage(id, { status: "scanning" });
     analyzeImage(id, file)
       .then((result) => {
+        const riskScore = calculateRiskScore(result.fields);
         updateImage(id, {
           status: "ready",
           analysisResult: result,
           metadataCount: result.totalCount,
+          riskScore,
         });
       })
       .catch((error: Error) => {
