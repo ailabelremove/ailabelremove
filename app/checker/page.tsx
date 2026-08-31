@@ -9,6 +9,7 @@ import { generateId } from "@/lib/utils/id";
 import { analyzeImage } from "@/lib/metadata/analyze";
 import { calculateRiskScore } from "@/lib/privacy/riskScore";
 import { cleanImage } from "@/lib/image/cleanRunner";
+import { buildVerification } from "@/lib/metadata/verify";
 import {
   CleaningMode,
   CleaningSelection,
@@ -101,7 +102,7 @@ export default function CheckerPage() {
 
   function handleClean(id: string) {
     const target = images.find((img) => img.id === id);
-    if (!target) return;
+    if (!target || !target.analysisResult) return;
 
     const selection =
       target.cleaningMode === "maximum"
@@ -114,10 +115,31 @@ export default function CheckerPage() {
       .then((blob) => {
         const cleanedUrl = URL.createObjectURL(blob);
         updateImage(id, {
-          status: "ready",
+          status: "verifying",
           cleanedBlob: blob,
           cleanedUrl,
           cleanedSizeBytes: blob.size,
+        });
+
+        const cleanedFile = new File([blob], target.name, {
+          type: target.file.type,
+        });
+
+        return analyzeImage(`${id}-verify`, cleanedFile);
+      })
+      .then((cleanedResult) => {
+        if (!cleanedResult) return;
+        const cleanedRiskScore = calculateRiskScore(cleanedResult.fields);
+        const verification = buildVerification(
+          target.analysisResult!,
+          cleanedResult,
+          selection
+        );
+        updateImage(id, {
+          status: "ready",
+          cleanedAnalysisResult: cleanedResult,
+          cleanedRiskScore,
+          verification,
         });
       })
       .catch((error: Error) => {
@@ -152,4 +174,4 @@ export default function CheckerPage() {
       />
     </main>
   );
-                     }
+}
