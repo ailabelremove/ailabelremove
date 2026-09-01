@@ -2,6 +2,7 @@ export interface WebpStripOptions {
   removeExif: boolean;
   removeXmp: boolean;
   removeIcc: boolean;
+  removeC2pa: boolean;
 }
 
 export function stripWebpMetadata(
@@ -42,6 +43,7 @@ export function stripWebpMetadata(
     if (fourCC === "EXIF" && options.removeExif) shouldRemove = true;
     if (fourCC === "XMP " && options.removeXmp) shouldRemove = true;
     if (fourCC === "ICCP" && options.removeIcc) shouldRemove = true;
+    if (fourCC === "C2PA" && options.removeC2pa) shouldRemove = true;
 
     if (!shouldRemove) {
       output.set(bytes.subarray(offset, chunkEnd), writeIndex);
@@ -53,6 +55,6 @@ export function stripWebpMetadata(
 
   const finalBytes = output.slice(0, writeIndex);
   const finalView = new DataView(finalBytes.buffer);
-  finalView.setUint32(4, writeIndex - 8, true); // update RIFF size field
+  finalView.setUint32(4, writeIndex - 8, true);
   return finalBytes.buffer;
-    }
+}
