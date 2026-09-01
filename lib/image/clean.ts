@@ -15,6 +15,7 @@ export async function cleanImageFile(
       removeXmp: selection.removeXmp,
       removeIptc: selection.removeIptc,
       removeIcc: selection.removeIcc,
+      removeC2pa: selection.removeC2pa,
     });
     return new Blob([cleaned], { type: "image/jpeg" });
   }
@@ -25,6 +26,7 @@ export async function cleanImageFile(
       removeExif: selection.removeExifGps,
       removeIcc: selection.removeIcc,
       removeTime: selection.removeExifGps,
+      removeC2pa: selection.removeC2pa,
     });
     return new Blob([cleaned], { type: "image/png" });
   }
@@ -34,6 +36,7 @@ export async function cleanImageFile(
       removeExif: selection.removeExifGps,
       removeXmp: selection.removeXmp,
       removeIcc: selection.removeIcc,
+      removeC2pa: selection.removeC2pa,
     });
     return new Blob([cleaned], { type: "image/webp" });
   }
