@@ -9,6 +9,11 @@ interface CustomCleaningOptionsProps {
 
 const OPTIONS: { key: keyof CleaningSelection; label: string; help: string }[] = [
   {
+    key: "removeC2pa",
+    label: "AI Content Credentials (C2PA)",
+    help: "Removes the signed provenance manifest that platforms like Instagram and TikTok scan for to show an 'AI info' label.",
+  },
+  {
     key: "removeExifGps",
     label: "Camera & location data (EXIF, GPS)",
     help: "Removes camera make/model, settings, and GPS location if present.",
@@ -16,7 +21,7 @@ const OPTIONS: { key: keyof CleaningSelection; label: string; help: string }[] =
   {
     key: "removeXmp",
     label: "XMP data",
-    help: "Removes Adobe-style XMP metadata, including editing history where present.",
+    help: "Removes Adobe-style XMP metadata, including AI-generation parameters where present.",
   },
   {
     key: "removeIptc",
