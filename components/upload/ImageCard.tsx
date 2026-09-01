@@ -90,6 +90,29 @@ export default function ImageCard({
         </button>
       </div>
 
+      {/* Cleaned result now shown right away, near the top, before metadata/risk details */}
+      {isCleaned && (
+        <div className="mt-3 rounded-lg border border-green-200 bg-green-50 p-3">
+          <p className="text-xs font-medium text-green-800">
+            ✓ Cleaned — {formatFileSize(image.sizeBytes)} →{" "}
+            {image.cleanedSizeBytes
+              ? formatFileSize(image.cleanedSizeBytes)
+              : "?"}
+          </p>
+          <a
+            href={image.cleanedUrl}
+            download={buildCleanedFilename(image.name)}
+            className="mt-2 inline-block w-full rounded-md bg-green-700 py-2.5 text-center text-sm font-semibold text-white"
+          >
+            Download Cleaned Image
+          </a>
+        </div>
+      )}
+
+      {isVerifying && (
+        <p className="mt-3 text-xs text-gray-500">Verifying…</p>
+      )}
+
       {hasResult && image.riskScore && (
         <div className="mt-3">
           <RiskScore result={image.riskScore} />
@@ -146,41 +169,18 @@ export default function ImageCard({
         </div>
       )}
 
-      {isCleaned && (
+      {isCleaned && image.verification && (
         <div className="mt-4 border-t border-gray-100 pt-3">
-          <p className="text-xs font-medium text-green-700">
-            Cleaned — {formatFileSize(image.sizeBytes)} →{" "}
-            {image.cleanedSizeBytes
-              ? formatFileSize(image.cleanedSizeBytes)
-              : "?"}
-          </p>
-
-          {isVerifying && (
-            <p className="mt-2 text-xs text-gray-500">Verifying…</p>
-          )}
-
-          {image.verification && (
-            <>
-              <div className="mt-2">
-                <BeforeAfterComparison
-                  verification={image.verification}
-                  riskBefore={image.riskScore}
-                  riskAfter={image.cleanedRiskScore}
-                />
-              </div>
-              <VerificationResultPanel verification={image.verification} />
-            </>
-          )}
-
-          <a
-            href={image.cleanedUrl}
-            download={buildCleanedFilename(image.name)}
-            className="mt-3 inline-block w-full rounded-md bg-green-700 py-2 text-center text-xs font-medium text-white"
-          >
-            Download Cleaned Image
-          </a>
+          <div>
+            <BeforeAfterComparison
+              verification={image.verification}
+              riskBefore={image.riskScore}
+              riskAfter={image.cleanedRiskScore}
+            />
+          </div>
+          <VerificationResultPanel verification={image.verification} />
         </div>
       )}
     </div>
   );
-  }
+          }
