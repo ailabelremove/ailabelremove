@@ -295,7 +295,9 @@ export default function CheckerPage() {
         onCleaningModeChange={handleCleaningModeChange}
         onCleaningSelectionChange={handleCleaningSelectionChange}
         onClean={handleClean}
+        onDownloadZip={handleDownloadZip}
       />
     </main>
   );
-          }
+    }
+    
