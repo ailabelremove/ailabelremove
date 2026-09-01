@@ -11,6 +11,7 @@ interface FileQueueProps {
   onCleaningModeChange: (id: string, mode: CleaningMode) => void;
   onCleaningSelectionChange: (id: string, selection: CleaningSelection) => void;
   onClean: (id: string) => void;
+  onDownloadZip?: () => void;
 }
 
 export default function FileQueue({
@@ -20,8 +21,11 @@ export default function FileQueue({
   onCleaningModeChange,
   onCleaningSelectionChange,
   onClean,
+  onDownloadZip,
 }: FileQueueProps) {
   if (images.length === 0) return null;
+
+  const showZipLink = images.length > 1;
 
   return (
     <div className="mt-6">
@@ -46,6 +50,8 @@ export default function FileQueue({
             onCleaningModeChange={onCleaningModeChange}
             onCleaningSelectionChange={onCleaningSelectionChange}
             onClean={onClean}
+            onDownloadZip={onDownloadZip}
+            showZipLink={showZipLink}
           />
         ))}
       </div>
