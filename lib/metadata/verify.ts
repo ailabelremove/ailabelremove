@@ -9,6 +9,7 @@ const ALL_CATEGORIES: MetadataCategory[] = [
   "IPTC",
   "PNG",
   "ICC",
+  "C2PA",
   "Other",
 ];
 
@@ -26,6 +27,8 @@ function wasCategoryRequested(
       return selection.removeIptc;
     case "ICC":
       return selection.removeIcc;
+    case "C2PA":
+      return selection.removeC2pa;
     case "PNG":
       return selection.removeExifGps || selection.removeXmp;
     default:
