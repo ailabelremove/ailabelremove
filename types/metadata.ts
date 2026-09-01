@@ -5,6 +5,7 @@ export type MetadataCategory =
   | "IPTC"
   | "PNG"
   | "ICC"
+  | "C2PA"
   | "Other";
 
 export interface MetadataField {
