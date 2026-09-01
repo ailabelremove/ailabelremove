@@ -1,8 +1,9 @@
 export interface PngStripOptions {
-  removeTextChunks: boolean; // tEXt, zTXt, iTXt — comments, descriptions, AI-generation params
-  removeExif: boolean; // eXIf chunk
-  removeIcc: boolean; // iCCP chunk
-  removeTime: boolean; // tIME chunk
+  removeTextChunks: boolean;
+  removeExif: boolean;
+  removeIcc: boolean;
+  removeTime: boolean;
+  removeC2pa: boolean;
 }
 
 const PNG_SIGNATURE = [137, 80, 78, 71, 13, 10, 26, 10];
@@ -49,6 +50,8 @@ export function stripPngMetadata(
       shouldRemove = true;
     } else if (options.removeTime && type === "tIME") {
       shouldRemove = true;
+    } else if (options.removeC2pa && type === "caBX") {
+      shouldRemove = true;
     }
 
     if (!shouldRemove) {
@@ -61,4 +64,4 @@ export function stripPngMetadata(
   }
 
   return output.slice(0, writeIndex).buffer;
-}
+        }
