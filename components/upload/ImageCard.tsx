@@ -17,6 +17,8 @@ interface ImageCardProps {
   onCleaningModeChange: (id: string, mode: CleaningMode) => void;
   onCleaningSelectionChange: (id: string, selection: CleaningSelection) => void;
   onClean: (id: string) => void;
+  onDownloadZip?: () => void;
+  showZipLink?: boolean;
 }
 
 const STATUS_LABELS: Record<QueuedImage["status"], string> = {
@@ -42,6 +44,8 @@ export default function ImageCard({
   onCleaningModeChange,
   onCleaningSelectionChange,
   onClean,
+  onDownloadZip,
+  showZipLink,
 }: ImageCardProps) {
   const [showDetails, setShowDetails] = useState(false);
   const hasResult = !!image.analysisResult && image.status !== "failed";
@@ -90,7 +94,6 @@ export default function ImageCard({
         </button>
       </div>
 
-      {/* Cleaned result now shown right away, near the top, before metadata/risk details */}
       {isCleaned && (
         <div className="mt-3 rounded-lg border border-green-200 bg-green-50 p-3">
           <p className="text-xs font-medium text-green-800">
@@ -106,6 +109,15 @@ export default function ImageCard({
           >
             Download Cleaned Image
           </a>
+          {showZipLink && onDownloadZip && (
+            <button
+              type="button"
+              onClick={onDownloadZip}
+              className="mt-2 inline-block w-full rounded-md border border-green-700 py-2 text-center text-xs font-medium text-green-800"
+            >
+              Download All as ZIP
+            </button>
+          )}
         </div>
       )}
 
