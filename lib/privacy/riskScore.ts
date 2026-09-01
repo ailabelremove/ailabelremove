@@ -58,6 +58,7 @@ const SOFTWARE_NAMES = new Set([
 
 function isBucketed(field: MetadataField): boolean {
   return (
+    field.category === "C2PA" ||
     LOCATION_MATCH(field) ||
     DEVICE_IDENTITY_NAMES.has(field.field) ||
     PERSONAL_IDENTITY_NAMES.has(field.field) ||
@@ -68,6 +69,13 @@ function isBucketed(field: MetadataField): boolean {
 }
 
 const BUCKETS: BucketDefinition[] = [
+  {
+    label: "AI Content Credentials (C2PA)",
+    base: 25,
+    increment: 5,
+    cap: 30,
+    matches: (f) => f.category === "C2PA",
+  },
   {
     label: "Location (GPS)",
     base: 30,
@@ -153,4 +161,4 @@ export function calculateRiskScore(fields: MetadataField[]): RiskScoreResult {
     level: levelFromScore(score),
     reasons: reasons.sort((a, b) => b.points - a.points),
   };
-  }
+}
