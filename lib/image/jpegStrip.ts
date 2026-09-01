@@ -3,6 +3,7 @@ export interface JpegStripOptions {
   removeXmp: boolean;
   removeIptc: boolean;
   removeIcc: boolean;
+  removeC2pa: boolean;
 }
 
 const EXIF_SIGNATURE = [0x45, 0x78, 0x69, 0x66, 0x00, 0x00]; // "Exif\0\0"
@@ -67,7 +68,6 @@ export function stripJpegMetadata(
     }
 
     if (marker === 0xda) {
-      // Start of Scan — rest of file is compressed pixel data, copy untouched
       copyRange(offset, bytes.length);
       break;
     }
@@ -95,12 +95,14 @@ export function stripJpegMetadata(
       if (isExif && options.removeExif) shouldRemove = true;
       if (isXmp && options.removeXmp) shouldRemove = true;
     } else if (marker === 0xed) {
-      // APP13 — Photoshop IRB / IPTC
       if (options.removeIptc) shouldRemove = true;
     } else if (marker === 0xe2) {
       if (startsWithAscii(payload, ICC_SIGNATURE) && options.removeIcc) {
         shouldRemove = true;
       }
+    } else if (marker === 0xeb) {
+      // APP11 — JUMBF / C2PA Content Credentials
+      if (options.removeC2pa) shouldRemove = true;
     }
 
     if (!shouldRemove) {
@@ -111,4 +113,4 @@ export function stripJpegMetadata(
   }
 
   return output.slice(0, writeIndex).buffer;
-}
+  }
