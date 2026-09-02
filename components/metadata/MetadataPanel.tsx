@@ -9,7 +9,7 @@ interface MetadataPanelProps {
 export default function MetadataPanel({ result, errorMessage }: MetadataPanelProps) {
   if (errorMessage) {
     return (
-      <p className="mt-2 text-xs text-red-600">
+      <p className="mt-2 text-xs text-red-600 dark:text-red-400">
         Could not analyze metadata: {errorMessage}
       </p>
     );
@@ -19,7 +19,7 @@ export default function MetadataPanel({ result, errorMessage }: MetadataPanelPro
 
   if (result.fields.length === 0) {
     return (
-      <p className="mt-2 text-xs text-gray-500">
+      <p className="mt-2 text-xs text-gray-500 dark:text-gray-400">
         No metadata fields were detected in this image.
       </p>
     );
@@ -33,7 +33,7 @@ export default function MetadataPanel({ result, errorMessage }: MetadataPanelPro
   }
 
   return (
-    <div className="mt-3 rounded-lg border border-gray-200">
+    <div className="mt-3 rounded-lg border border-gray-200 dark:border-gray-800">
       {Array.from(grouped.entries()).map(([category, fields]) => (
         <MetadataCategory key={category} category={category} fields={fields} />
       ))}
