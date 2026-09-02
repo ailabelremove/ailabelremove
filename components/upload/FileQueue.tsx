@@ -30,13 +30,13 @@ export default function FileQueue({
   return (
     <div className="mt-6">
       <div className="mb-3 flex items-center justify-between">
-        <p className="text-sm font-medium text-gray-700">
+        <p className="text-sm font-medium text-gray-700 dark:text-gray-300">
           {images.length} image{images.length > 1 ? "s" : ""}
         </p>
         <button
           type="button"
           onClick={onClearAll}
-          className="text-sm text-gray-500 hover:text-gray-700"
+          className="text-sm text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
         >
           Clear all
         </button>
