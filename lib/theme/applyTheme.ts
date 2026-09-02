@@ -1,6 +1,8 @@
 export type ThemePreference = "light" | "dark" | "system";
 
 const STORAGE_KEY = "ailabelremove-theme";
+const LIGHT_COLOR = "#ffffff";
+const DARK_COLOR = "#030712";
 
 export function getStoredTheme(): ThemePreference {
   if (typeof window === "undefined") return "system";
@@ -24,7 +26,15 @@ export function resolveTheme(theme: ThemePreference): "light" | "dark" {
   return theme;
 }
 
+function updateThemeColorMeta(resolved: "light" | "dark") {
+  const meta = document.querySelector('meta[name="theme-color"]');
+  if (meta) {
+    meta.setAttribute("content", resolved === "dark" ? DARK_COLOR : LIGHT_COLOR);
+  }
+}
+
 export function applyTheme(theme: ThemePreference) {
   const resolved = resolveTheme(theme);
   document.documentElement.classList.toggle("dark", resolved === "dark");
+  updateThemeColorMeta(resolved);
 }
