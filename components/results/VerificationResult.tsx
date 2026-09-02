@@ -11,17 +11,17 @@ const STATUS_ICON: Record<string, string> = {
 };
 
 const STATUS_STYLE: Record<string, string> = {
-  removed: "text-green-700",
-  remains: "text-amber-700",
-  unaffected: "text-gray-400",
+  removed: "text-green-700 dark:text-green-400",
+  remains: "text-amber-700 dark:text-amber-400",
+  unaffected: "text-gray-400 dark:text-gray-500",
 };
 
 export default function VerificationResultPanel({
   verification,
 }: VerificationResultProps) {
   return (
-    <div className="mt-3 rounded-lg border border-gray-200 p-3">
-      <p className="text-xs font-medium text-gray-900">
+    <div className="mt-3 rounded-lg border border-gray-200 p-3 dark:border-gray-800">
+      <p className="text-xs font-medium text-gray-900 dark:text-gray-100">
         {verification.fullyClean
           ? "Verification completed — no metadata remains."
           : "Verification completed — some metadata remains."}
@@ -45,7 +45,7 @@ export default function VerificationResultPanel({
         ))}
       </ul>
       {!verification.fullyClean && (
-        <p className="mt-2 text-[11px] text-gray-500">
+        <p className="mt-2 text-[11px] text-gray-500 dark:text-gray-400">
           Fields marked "remain" were not included in your cleaning
           selection, or could not be safely removed for this file type.
         </p>
