@@ -1,3 +1,11 @@
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "How AI Label Remove Works | AI Label Remove",
+  description:
+    "See exactly how we scan, score, clean, and verify image metadata — all locally in your browser.",
+  alternates: { canonical: "/how-it-works" },
+};
 export default function HowItWorksPage() {
   return (
     <main className="p-8">
