@@ -44,11 +44,12 @@ export default function CustomCleaningOptions({
   }
 
   return (
-    <div className="flex flex-col gap-2">
+    <fieldset className="flex flex-col gap-2">
+      <legend className="sr-only">Custom cleaning options</legend>
       {OPTIONS.map((opt) => (
         <label
           key={opt.key}
-          className="flex items-start gap-2 rounded-md border border-gray-200 p-2"
+          className="flex items-start gap-2 rounded-md border border-gray-200 p-2 dark:border-gray-700"
         >
           <input
             type="checkbox"
@@ -57,17 +58,19 @@ export default function CustomCleaningOptions({
             className="mt-0.5"
           />
           <span>
-            <span className="block text-xs font-medium text-gray-900">
+            <span className="block text-xs font-medium text-gray-900 dark:text-gray-100">
               {opt.label}
             </span>
-            <span className="block text-[11px] text-gray-500">{opt.help}</span>
+            <span className="block text-[11px] text-gray-500 dark:text-gray-400">
+              {opt.help}
+            </span>
           </span>
         </label>
       ))}
-      <p className="text-[11px] text-gray-400">
+      <p className="text-[11px] text-gray-400 dark:text-gray-500">
         Not every category applies to every file format — options with no
         matching data in this image simply have no effect.
       </p>
-    </div>
+    </fieldset>
   );
 }
