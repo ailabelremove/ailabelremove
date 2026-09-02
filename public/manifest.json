@@ -1,0 +1,17 @@
+{
+  "name": "AI Label Remove",
+  "short_name": "AI Label Remove",
+  "description": "Inspect, clean, and protect your images from hidden metadata and AI labels — entirely in your browser.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#0f172a",
+  "icons": [
+    {
+      "src": "/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
