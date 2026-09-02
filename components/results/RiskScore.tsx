@@ -8,9 +8,10 @@ interface RiskScoreProps {
 }
 
 const LEVEL_STYLES: Record<string, string> = {
-  low: "bg-green-50 text-green-700 border-green-200",
-  medium: "bg-amber-50 text-amber-700 border-amber-200",
-  high: "bg-red-50 text-red-700 border-red-200",
+  low: "bg-green-50 text-green-700 border-green-200 dark:bg-green-950/40 dark:text-green-300 dark:border-green-900",
+  medium:
+    "bg-amber-50 text-amber-700 border-amber-200 dark:bg-amber-950/40 dark:text-amber-300 dark:border-amber-900",
+  high: "bg-red-50 text-red-700 border-red-200 dark:bg-red-950/40 dark:text-red-300 dark:border-red-900",
 };
 
 const LEVEL_LABELS: Record<string, string> = {
