@@ -1,4 +1,4 @@
-import type { Metadata, Viewport } from "next";
+import type { Metadata } from "next";
 import Script from "next/script";
 import "./globals.css";
 import Header from "@/components/layout/Header";
@@ -16,16 +16,14 @@ export const metadata: Metadata = {
   },
 };
 
-export const viewport: Viewport = {
-  themeColor: "#0f172a",
-};
-
 const THEME_INIT_SCRIPT = `
 (function() {
   try {
     var stored = localStorage.getItem('ailabelremove-theme') || 'system';
     var isDark = stored === 'dark' || (stored === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches);
     if (isDark) document.documentElement.classList.add('dark');
+    var meta = document.querySelector('meta[name="theme-color"]');
+    if (meta) meta.setAttribute('content', isDark ? '#030712' : '#ffffff');
   } catch (e) {}
 })();
 `;
@@ -37,6 +35,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
+      <head>
+        <meta name="theme-color" content="#ffffff" />
+      </head>
       <body className="min-h-screen bg-white text-gray-900 antialiased dark:bg-gray-950 dark:text-gray-100">
         <Script id="theme-init" strategy="beforeInteractive">
           {THEME_INIT_SCRIPT}
