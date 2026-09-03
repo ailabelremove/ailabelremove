@@ -12,15 +12,20 @@ const COLUMNS = [
     title: "Learn",
     links: [
       { href: "/metadata-guide", label: "Metadata Guide" },
+      { href: "/exif-guide", label: "EXIF Guide" },
+      { href: "/xmp-guide", label: "XMP Guide" },
+      { href: "/c2pa-guide", label: "C2PA Guide" },
       { href: "/how-it-works", label: "How It Works" },
-      { href: "/privacy", label: "Privacy Guide" },
     ],
   },
   {
     title: "Company",
     links: [
       { href: "/about", label: "About" },
+      { href: "/contact", label: "Contact" },
       { href: "/privacy", label: "Privacy" },
+      { href: "/terms", label: "Terms" },
+      { href: "/disclaimer", label: "Disclaimer" },
       { href: "/faq", label: "FAQ" },
     ],
   },
