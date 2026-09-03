@@ -19,6 +19,15 @@ const COLUMNS = [
     ],
   },
   {
+    title: "Platforms",
+    links: [
+      { href: "/instagram-ai-label-guide", label: "Instagram" },
+      { href: "/tiktok-ai-label-guide", label: "TikTok" },
+      { href: "/facebook-ai-label-guide", label: "Facebook" },
+      { href: "/pinterest-ai-label-guide", label: "Pinterest" },
+    ],
+  },
+  {
     title: "Company",
     links: [
       { href: "/about", label: "About" },
@@ -34,7 +43,7 @@ const COLUMNS = [
 export default function Footer() {
   return (
     <footer className="mt-16 border-t border-gray-200 dark:border-gray-800">
-      <div className="mx-auto grid max-w-5xl grid-cols-2 gap-6 px-4 py-8 text-sm sm:grid-cols-3">
+      <div className="mx-auto grid max-w-5xl grid-cols-2 gap-6 px-4 py-8 text-sm sm:grid-cols-4">
         {COLUMNS.map((col) => (
           <div key={col.title}>
             <p className="font-semibold text-gray-900 dark:text-gray-100">
