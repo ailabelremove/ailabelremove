@@ -12,6 +12,9 @@ const ROUTES = [
   "/xmp-guide",
   "/c2pa-guide",
   "/privacy",
+  "/terms",
+  "/disclaimer",
+  "/contact",
   "/faq",
   "/about",
 ];
