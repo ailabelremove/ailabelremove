@@ -37,6 +37,10 @@ export default function RootLayout({
     <html lang="en">
       <head>
         <meta name="theme-color" content="#ffffff" />
+        <meta
+          name="google-site-verification"
+          content="nCso1PeYfJjvhTKlTUXOnFgSXxKkZbR4BdclDFUzoAM"
+        />
       </head>
       <body className="min-h-screen bg-white text-gray-900 antialiased dark:bg-gray-950 dark:text-gray-100">
         <Script id="theme-init" strategy="beforeInteractive">
