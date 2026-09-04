@@ -15,6 +15,11 @@ const ROUTES = [
   "/tiktok-ai-label-guide",
   "/facebook-ai-label-guide",
   "/pinterest-ai-label-guide",
+  "/articles",
+  "/articles/photo-privacy-checklist",
+  "/articles/before-posting-social-media",
+  "/articles/turn-off-gps-location",
+  "/articles/sharenting-awareness",
   "/privacy",
   "/terms",
   "/disclaimer",
@@ -28,4 +33,4 @@ export default function sitemap(): MetadataRoute.Sitemap {
     url: `${BASE_URL}${route}`,
     lastModified: new Date(),
   }));
-}
+    }
