@@ -16,6 +16,7 @@ const COLUMNS = [
       { href: "/xmp-guide", label: "XMP Guide" },
       { href: "/c2pa-guide", label: "C2PA Guide" },
       { href: "/how-it-works", label: "How It Works" },
+      { href: "/articles", label: "Articles" },
     ],
   },
   {
